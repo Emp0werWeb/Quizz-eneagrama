@@ -481,38 +481,72 @@ function resetAll(){
 }
 
 // ---------------------------
+// AJUSTE DO BOTÃO COMEÇAR/SAIR
+// ---------------------------
+const btnStart = document.getElementById("btnStart");
+
+function showIntro(){
+  quiz.classList.add("hidden");
+  results.classList.add("hidden");
+  intro.classList.remove("hidden");
+
+  // restaura botão para "Começar"
+  btnStart.textContent = "Começar";
+  btnStart.classList.add("primary");
+  btnStart.classList.remove("ghost");
+  btnStart.onclick = (e)=>{
+    e.preventDefault();
+    showQuiz();
+  };
+}
+
+function showQuiz(){
+  intro.classList.add("hidden");
+  results.classList.add("hidden");
+  quiz.classList.remove("hidden");
+  renderQuestion();
+  updateNav();
+
+  // troca botão para "Sair"
+  btnStart.textContent = "Sair";
+  btnStart.classList.remove("primary");
+  btnStart.classList.add("ghost");
+  btnStart.onclick = (e)=>{
+    e.preventDefault();
+    showIntro();
+  };
+}
+
+// ---------------------------
 // EVENTS
 // ---------------------------
 document.addEventListener("DOMContentLoaded", ()=>{
-  $("#btnStart").addEventListener("click",(e)=>{ e.preventDefault(); showQuiz(); });
-  $("#btnStart2").addEventListener("click",(e)=>{ e.preventDefault(); showQuiz(); });
+  btnStart.onclick = (e)=>{ e.preventDefault(); showQuiz(); };
+  document.getElementById("btnStart2").onclick = (e)=>{ e.preventDefault(); showQuiz(); };
 
-  $("#btnPrev").addEventListener("click",()=>{ idx=Math.max(0, idx-1); renderQuestion(); updateNav(); });
-  $("#btnNext").addEventListener("click",()=>{ idx=Math.min(QUESTIONS.length-1, idx+1); renderQuestion(); updateNav(); });
-  $("#btnFinish").addEventListener("click",()=> renderResults());
+  $("#btnPrev").onclick = ()=>{ idx=Math.max(0, idx-1); renderQuestion(); updateNav(); };
+  $("#btnNext").onclick = ()=>{ idx=Math.min(QUESTIONS.length-1, idx+1); renderQuestion(); updateNav(); };
+  $("#btnFinish").onclick = ()=> renderResults();
 
-  $("#btnRevisar").addEventListener("click",()=>{
+  $("#btnRevisar").onclick = ()=>{
     results.classList.add("hidden");
     quiz.classList.remove("hidden");
     renderQuestion();
     updateNav();
-  });
-  $("#btnRefazer").addEventListener("click", resetAll);
+  };
+  $("#btnRefazer").onclick = resetAll;
 
-  $("#btnSalvar").addEventListener("click", ()=>{
-    const payload = {
-      answers, scores: computeScores(), finishedAt: new Date().toISOString()
-    };
+  $("#btnSalvar").onclick = ()=>{
+    const payload = { answers, scores: computeScores(), finishedAt: new Date().toISOString() };
     const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url; a.download = "resultado-eneagrama.json"; a.click();
     URL.revokeObjectURL(url);
-  });
+  };
 
-  $("#btnImprimir").addEventListener("click", ()=> window.print());
+  $("#btnImprimir").onclick = ()=> window.print();
 
-  const modal = document.getElementById("modalComo");
-  document.getElementById("btnComoFunciona").addEventListener("click", ()=> modal.showModal());
+  document.getElementById("btnComoFunciona").onclick = ()=> document.getElementById("modalComo").showModal();
 });
 
