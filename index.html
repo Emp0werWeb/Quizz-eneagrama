@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AURA | Quizz Eneagrama de Personalidade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="./script.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="logo">◎</div>
+      <div class="titles">
+        <h1>Eneagrama – Quizz Inteligente</h1>
+        <p class="subtitle">Descubra seus traços dominantes entre os nove tipos</p>
+      </div>
+    </div>
+    <nav class="actions">
+      <button id="btnComoFunciona" class="ghost">Como funciona</button>
+      <a class="primary" href="#" id="btnStart">Começar</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="intro" class="card">
+      <h2>Bem-vinda(o) 👋</h2>
+      <p>
+        Este quizz apresenta 19 questões. Em cada uma, escolha a alternativa que mais
+        descreve você <strong>na maior parte do tempo</strong>. Não há certo ou errado.
+      </p>
+      <ul class="bullets">
+        <li>Se estiver em dúvida, marque a opção que for <em>mais próxima</em> do seu jeito.</li>
+        <li>Você pode <strong>pular e voltar</strong> livremente entre as questões.</li>
+        <li>Ao finalizar, mostraremos seus <strong>3 tipos mais prováveis</strong>,
+            descrições resumidas e um gráfico radar.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="primary" href="#" id="btnStart2">Iniciar agora</a>
+      </div>
+    </section>
+
+    <section id="quiz" class="card hidden">
+      <div class="quiz-top">
+        <div class="progress-wrap">
+          <div id="progressText">Questão 1 / 19</div>
+          <div class="progress">
+            <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="nav-wrap">
+          <button id="btnPrev" class="ghost" disabled>← Anterior</button>
+          <button id="btnNext" class="ghost">Próxima →</button>
+          <button id="btnFinish" class="primary outline hidden">Finalizar</button>
+        </div>
+      </div>
+
+      <div id="questionContainer" class="question"></div>
+    </section>
+
+    <section id="results" class="card hidden">
+      <h2>Seus resultados</h2>
+      <div id="summary" class="summary"></div>
+      <div class="grid-2">
+        <canvas id="chart" height="280"></canvas>
+        <div>
+          <h3>Top 3 traços</h3>
+          <ol id="top3" class="top3"></ol>
+
+          <div class="btns-stack">
+            <button id="btnRevisar" class="ghost">Revisar respostas</button>
+            <button id="btnRefazer" class="ghost">Refazer</button>
+            <button id="btnSalvar" class="primary outline">Salvar JSON</button>
+            <button id="btnImprimir" class="primary">Imprimir / PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="descriptions" class="descriptions"></div>
+    </section>
+
+    <dialog id="modalComo">
+      <h3>Como funciona</h3>
+      <p>
+        As alternativas estão mapeadas para os nove tipos do Eneagrama. Somamos suas escolhas e
+        destacamos os perfis com maior pontuação. O resultado não é diagnóstico; serve como
+        <strong>ponto de partida</strong> para sua autoinvestigação.
+      </p>
+      <form method="dialog">
+        <button class="primary">Entendi</button>
+      </form>
+    </dialog>
+  </main>
+
+  <footer class="app-footer">
+    <span>Feito com ♥ para estudos e autoconhecimento.</span>
+    <span>Você pode publicar no GitHub Pages (apenas arquivos estáticos).</span>
+  </footer>
+</body>
+</html>
