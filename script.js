@@ -418,37 +418,37 @@ function renderResults(){
   const ordered = sortTypes(scores);
   const top3 = ordered.slice(0,3);
 
-  // Summary
   const totalAnswered = answers.filter(Boolean).length;
-  $("#summary").innerHTML = `Você respondeu <strong>${totalAnswered}/${QUESTIONS.length}</strong> questões. Quanto mais respostas, mais confiável o retrato.`;
+  $("#summary").innerHTML =
+    `Você respondeu <strong>${totalAnswered}/${QUESTIONS.length}</strong> questões. Quanto mais respostas, mais confiável o retrato.`;
 
-  // Chart
-  const ctx = document.getElementById("chart");
-  const data = {
-    labels: Object.values(TYPES).map(t=>t.name),
-    datasets: [{
-      label:"Pontuação",
-      data: Object.keys(TYPES).map(k=>scores[k]),
-      // Border/background colors são definidos pelo Chart.js por padrão (não definimos cores explicitamente).
-      fill: true,
-      tension: 0.2
-    }]
-  };
   if(chart){ chart.destroy(); }
-  chart = new Chart(ctx, { type:"radar", data, options:{
-    responsive:true, maintainAspectRatio:false,
-    scales:{ r:{ suggestedMin:0, suggestedMax: Math.max(4, Math.ceil(answers.length/2)) } },
-    plugins:{ legend:{ display:false } }
-  }});
+  const ctx = document.getElementById("chart");
+  chart = new Chart(ctx, {
+    type:"radar",
+    data:{
+      labels: Object.values(TYPES).map(t=>t.name),
+      datasets:[{
+        label:"Pontuação",
+        data: Object.keys(TYPES).map(k=>scores[k]),
+        fill:true,
+        tension:0.2
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      scales:{ r:{ suggestedMin:0, suggestedMax: Math.max(4, Math.ceil(answers.length/2)) } },
+      plugins:{ legend:{ display:false } }
+    }
+  });
 
-  // Top 3
   const topList = $("#top3");
   topList.innerHTML = top3.map(({type,score})=>{
     const t = TYPES[type];
     return `<li><strong>${t.name}</strong> — ${score} ponto(s)</li>`;
   }).join("");
 
-  // Descriptions
   const desc = $("#descriptions");
   desc.innerHTML = top3.map(({type})=>{
     const t = TYPES[type], d = TYPE_DESCRIPTIONS[type];
@@ -464,7 +464,12 @@ function renderResults(){
   intro.classList.add("hidden");
   quiz.classList.add("hidden");
   results.classList.remove("hidden");
+
+  // 👇 garante que no celular o usuário veja o resultado sem precisar "rolar sem fim"
+  results.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+
 
 function showQuiz(){
   intro.classList.add("hidden");
