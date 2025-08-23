@@ -63,18 +63,22 @@ a{color:inherit; text-decoration:none}
 .option input{margin-top:4px}
 .badge{font-size:12px; padding:2px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted)}
 
-.grid-2{display:grid; grid-template-columns:1.1fr .9fr; gap:16px; margin-top:12px}
-.top3{padding-left:20px}
-.top3 li{margin:6px 0}
-.summary{margin-bottom:8px; color:var(--muted)}
-.descriptions{margin-top:22px; display:grid; gap:14px}
-.desc-card{border:1px solid var(--line); border-radius:14px; padding:14px; background:#0f1422}
-.desc-card h4{margin:0 0 6px}
-.desc-meta{display:flex; gap:8px; flex-wrap:wrap; color:var(--muted)}
-.badges{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px}
+.grid-2 { align-items: start; }
 
-@media (max-width: 860px){
-  .grid-2{grid-template-columns:1fr}
-  .actions{display:none}
-  .app-header{position:static}
+/* contêiner fixo para o radar */
+.chart-wrap {
+  height: 320px; /* pode ajustar para 280~360px */
 }
+
+/* canvas ocupa toda a altura do contêiner */
+#chart {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100%;
+}
+
+@media (max-width: 860px) {
+  .chart-wrap { height: 280px; }
+}
+
